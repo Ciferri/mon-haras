@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Mon Grand Haras — Idle Arcade</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E%F0%9F%90%B4%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+<canvas id="cv"></canvas>
+
+<div id="hud">
+  <div class="pill" id="goldPill"><span class="coin"></span><span id="goldTxt">0</span></div>
+  <button id="adBtn">📺 Pub<br>gains ×2</button>
+</div>
+
+<div id="tuto">Maintiens et glisse pour te déplacer</div>
+<div id="toast"></div>
+
+<div id="adOv">
+  <div>
+    <div class="tv">📺</div>
+    <h2>Publicité simulée</h2>
+    <p>Vos gains seront doublés pendant 30 s</p>
+    <div class="cd" id="adCd">3</div>
+  </div>
+</div>
+
+<div id="offlineOv">
+  <div class="card">
+    <div class="icon">🌙</div>
+    <h2>Bienvenue de retour !</h2>
+    <p id="offlineTxt">Pendant votre absence, vos chevaux ont continué de produire :</p>
+    <div class="goldRow"><span class="coin"></span><span id="offlineGold">0</span></div>
+    <button id="offlineAdBtn">📺 Doubler (pub)</button>
+    <button id="offlineCloseBtn">Continuer</button>
+  </div>
+</div>
+
+<div id="err"></div>
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+  background: #6fb54a;
+  font-family:
+    'Nunito',
+    -apple-system,
+    'Segoe UI',
+    Arial,
+    sans-serif;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+canvas {
+  display: block;
+  position: fixed;
+  inset: 0;
+}
+
+/* ---------- HUD ---------- */
+#hud {
+  position: fixed;
+  top: calc(10px + env(safe-area-inset-top));
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 0 12px;
+  pointer-events: none;
+  z-index: 10;
+}
+.pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(30, 25, 15, 0.72);
+  border-radius: 99px;
+  padding: 7px 16px 7px 9px;
+  color: #fff;
+  font-weight: 800;
+  font-size: 19px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
+}
+.pill.bump {
+  animation: bump 0.25s ease;
+}
+@keyframes bump {
+  40% {
+    transform: scale(1.12);
+  }
+}
+.coin {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffe98a, #f7c526 60%, #d99b12);
+  border: 2.5px solid #b57e0a;
+  box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.15);
+}
+
+#adBtn {
+  pointer-events: auto;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(180deg, #a86ee8, #7d3fd1);
+  color: #fff;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.15;
+  padding: 9px 14px;
+  border-radius: 16px;
+  box-shadow: 0 4px 0 #5b2a9e;
+  text-align: center;
+  min-height: 44px;
+  min-width: 44px;
+}
+#adBtn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #5b2a9e;
+}
+#adBtn.boost {
+  background: linear-gradient(180deg, #ffd23f, #f0a818);
+  box-shadow: 0 4px 0 #b57e0a;
+  color: #5a3c00;
+}
+#adBtn.off {
+  filter: grayscale(0.6) opacity(0.6);
+  pointer-events: none;
+}
+
+/* ---------- Tutoriel ---------- */
+#tuto {
+  position: fixed;
+  left: 50%;
+  bottom: calc(150px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.94);
+  color: #3c3123;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 10px 18px;
+  border-radius: 99px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  pointer-events: none;
+  white-space: nowrap;
+  transition: opacity 0.3s;
+}
+#tuto.hide {
+  opacity: 0;
+}
+
+/* ---------- Toast ---------- */
+#toast {
+  position: fixed;
+  top: calc(64px + env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: rgba(30, 25, 15, 0.85);
+  color: #ffeec2;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 9px 18px;
+  border-radius: 99px;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.25s;
+  white-space: nowrap;
+  max-width: 92%;
+}
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Overlay publicité simulée ---------- */
+#adOv {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 14, 8, 0.88);
+  z-index: 30;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+#adOv.open {
+  display: flex;
+}
+#adOv .tv {
+  font-size: 64px;
+  animation: wob 1s ease infinite;
+}
+@keyframes wob {
+  50% {
+    transform: rotate(4deg) scale(1.05);
+  }
+}
+#adOv h2 {
+  font-size: 20px;
+  margin: 10px 0 4px;
+}
+#adOv p {
+  font-size: 14px;
+  opacity: 0.75;
+}
+#adOv .cd {
+  font-size: 40px;
+  font-weight: 800;
+  color: #ffd23f;
+  margin-top: 10px;
+}
+
+/* ---------- Overlay gains hors ligne ---------- */
+#offlineOv {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 14, 8, 0.88);
+  z-index: 30;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+#offlineOv.open {
+  display: flex;
+}
+#offlineOv .card {
+  background: rgba(40, 32, 20, 0.96);
+  border-radius: 22px;
+  padding: 28px 26px;
+  max-width: 320px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+#offlineOv .icon {
+  font-size: 52px;
+}
+#offlineOv h2 {
+  font-size: 19px;
+  margin: 8px 0 4px;
+}
+#offlineOv p {
+  font-size: 14px;
+  opacity: 0.8;
+  margin-bottom: 14px;
+}
+#offlineOv .goldRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+#offlineOv button {
+  display: block;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 15px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  margin-bottom: 10px;
+  min-height: 44px;
+}
+#offlineAdBtn {
+  background: linear-gradient(180deg, #a86ee8, #7d3fd1);
+  color: #fff;
+  box-shadow: 0 4px 0 #5b2a9e;
+}
+#offlineAdBtn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #5b2a9e;
+}
+#offlineAdBtn:disabled {
+  filter: grayscale(0.6) opacity(0.6);
+  pointer-events: none;
+}
+#offlineCloseBtn {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  box-shadow: none;
+  margin-bottom: 0;
+}
+
+#err {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #c0392b;
+  color: #fff;
+  font-size: 12px;
+  padding: 8px 12px;
+  z-index: 99;
+  display: none;
+  white-space: pre-wrap;
+}

@@ -13,6 +13,8 @@ import { loadRawSave, applySave, saveGame } from './systems/save';
 import { SAVE } from './data/balance';
 import { updateGame } from './game';
 import { render } from './render';
+import { cam, proj } from './engine/camera';
+import { viewport } from './engine/viewport';
 
 setupErrorBanner();
 
@@ -32,6 +34,7 @@ if (rawSave) {
 
 if (import.meta.env.DEV) {
   (window as unknown as { __debugState?: unknown }).__debugState = state;
+  (window as unknown as { __debugCam?: unknown }).__debugCam = { cam, proj, viewport };
 }
 
 initTutorialText(state.tuto);

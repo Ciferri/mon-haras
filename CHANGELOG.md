@@ -2,6 +2,19 @@
 
 Toutes les modifications notables de ce projet sont documentées ici.
 
+## [0.2.1] — Correctif : personnage invisible sur écran haute densité
+
+### Corrigé
+- Le `<canvas>` n'avait pas de `width`/`height` CSS explicites. Sur tout
+  écran avec `devicePixelRatio > 1` (quasi tous les mobiles), il gardait sa
+  taille intrinsèque (celle du buffer interne, dimensionné en pixels
+  physiques par `ensureViewportSize`) au lieu de se caler sur le viewport :
+  le jeu se dessinait deux fois trop grand et sa moitié bas-droite sortait
+  de l'écran — invisible, mais toujours simulée. En pratique, le
+  personnage disparaissait dès qu'il s'éloignait du coin haut-gauche de la
+  carte (typiquement en allant vers le champ). Fix : `canvas { width:
+  100%; height: 100%; }` dans `src/style.css`.
+
 ## [0.2.0] — Phase 2 : eau, employés, paliers visuels, extension du terrain
 
 ### Ajouté

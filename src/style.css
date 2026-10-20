@@ -23,6 +23,14 @@ canvas {
   display: block;
   position: fixed;
   inset: 0;
+  /* Le buffer interne est dimensionné en pixels physiques (devicePixelRatio)
+     par ensureViewportSize ; sans ces deux lignes, un <canvas> sans CSS
+     width/height explicite garde sa taille intrinsèque (celle du buffer) au
+     lieu de se caler sur le viewport — sur tout écran avec devicePixelRatio
+     > 1 (quasi tous les mobiles), le jeu se dessine deux fois trop grand et
+     sa moitié bas-droite sort de l'écran, invisible. */
+  width: 100%;
+  height: 100%;
 }
 
 /* ---------- HUD ---------- */

@@ -6,7 +6,9 @@ import { updatePlantsRegrowth } from './world/plant';
 import { updateFlyers, updateParticles, updatePopups } from './world/effects';
 import { updateHarvest } from './systems/harvest';
 import { updateDeliver } from './systems/deliver';
+import { updateWaterFill, updateWaterDeliver } from './systems/water';
 import { updateProduce } from './systems/produce';
+import { updateEmployees } from './systems/employee';
 import { updateCoinCollection } from './systems/collect';
 import { updateBuyZones } from './systems/buyzones';
 import { updateAdBoost } from './systems/adBoost';
@@ -23,7 +25,10 @@ export function updateGame(state: GameState, dt: number): GameEvent[] {
     ...updateTutoMoveTrigger(state),
     ...updateHarvest(state),
     ...updateDeliver(state),
+    ...updateWaterFill(state),
+    ...updateWaterDeliver(state),
     ...updateProduce(state, dt),
+    ...updateEmployees(state, dt),
     ...updateCoinCollection(state, dt),
     ...updateBuyZones(state, dt),
     ...updateAdBoost(state, dt),

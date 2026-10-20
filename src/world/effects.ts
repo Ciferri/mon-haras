@@ -71,6 +71,18 @@ function hayIcon(ctx: CanvasRenderingContext2D, x: number, y: number): void {
   ctx.fillRect(x - 9 * s, y - 1 * s, 18 * s, 2 * s);
 }
 
+function waterIcon(ctx: CanvasRenderingContext2D, x: number, y: number): void {
+  const s = cam.s;
+  ctx.fillStyle = '#5fb6e0';
+  ctx.beginPath();
+  ctx.ellipse(x, y, 7 * s, 9 * s, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = 'rgba(255,255,255,.5)';
+  ctx.beginPath();
+  ctx.ellipse(x - 2 * s, y - 2 * s, 2 * s, 3 * s, 0, 0, Math.PI * 2);
+  ctx.fill();
+}
+
 export function drawFlyers(
   ctx: CanvasRenderingContext2D,
   flyers: Flyer[],
@@ -92,6 +104,22 @@ export function drawFlyers(
       const p1 = proj(f.x, f.z, f.y);
       const p2 = proj(f.tx, f.tz, 14);
       hayIcon(
+        ctx,
+        p1.x + (p2.x - p1.x) * e,
+        p1.y + (p2.y - p1.y) * e - Math.sin(e * Math.PI) * 36 * s,
+      );
+    } else if (f.type === 'water') {
+      const p1 = proj(f.x, f.z, f.y);
+      const p2 = proj(playerX, playerZ, 50);
+      waterIcon(
+        ctx,
+        p1.x + (p2.x - p1.x) * e,
+        p1.y + (p2.y - p1.y) * e - Math.sin(e * Math.PI) * 30 * s,
+      );
+    } else if (f.type === 'water2') {
+      const p1 = proj(f.x, f.z, f.y);
+      const p2 = proj(f.tx, f.tz, 14);
+      waterIcon(
         ctx,
         p1.x + (p2.x - p1.x) * e,
         p1.y + (p2.y - p1.y) * e - Math.sin(e * Math.PI) * 36 * s,

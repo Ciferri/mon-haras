@@ -6,6 +6,10 @@ export type GameEvent =
   | { type: 'coinCollected'; value: number; x: number; z: number }
   | { type: 'horseUpgraded'; horseIndex: number; level: number; x: number; z: number }
   | { type: 'horseUnlocked'; x: number; z: number }
+  | { type: 'waterCollected' }
+  | { type: 'waterDelivered'; horseIndex: number }
+  | { type: 'fieldExtended'; x: number; z: number }
+  | { type: 'employeeHired'; x: number; z: number }
   | { type: 'tutoAdvanced'; step: number }
   | { type: 'adBoostStarted' }
   | { type: 'adBoostEnded' };

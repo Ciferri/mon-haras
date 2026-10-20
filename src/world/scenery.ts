@@ -5,6 +5,9 @@ import { viewport } from '../engine/viewport';
 import type { Flower } from './layout';
 import { FIELD } from './layout';
 
+/** Hauteur de marge autour d'une rangée de plants, utilisée pour calculer le contour de la parcelle. */
+const ROW_MARGIN = 33;
+
 export function drawTree(ctx: CanvasRenderingContext2D, x: number, z: number, i: number): void {
   drawShadow(ctx, x, z + 4, 22);
   drawBox(ctx, x, z, 0, 10, 10, 12, '#9b6b3a', '#7c4f26', 3);
@@ -47,27 +50,45 @@ export function drawFlowers(ctx: CanvasRenderingContext2D, flowers: Flower[]): v
   }
 }
 
-export function drawFieldPlot(ctx: CanvasRenderingContext2D): void {
+/** Dessine la parcelle de champ ; `rows` reflète l'extension achetée en Phase 2 (3 ou 4). */
+export function drawFieldPlot(ctx: CanvasRenderingContext2D, rows: number): void {
   const s = cam.s;
-  const fa = proj(FIELD.x - FIELD.w / 2, FIELD.z - FIELD.d / 2);
-  const fb = proj(FIELD.x + FIELD.w / 2, FIELD.z + FIELD.d / 2);
+  const topZ = FIELD.z - 62 - ROW_MARGIN;
+  const botZ = FIELD.z - 62 + (rows - 1) * FIELD.rowSpacing + ROW_MARGIN;
+  const fa = proj(FIELD.x - FIELD.w / 2, topZ);
+  const fb = proj(FIELD.x + FIELD.w / 2, botZ);
   ctx.fillStyle = '#d9b46a';
   roundRect(ctx, fa.x, fa.y, fb.x - fa.x, fb.y - fa.y, 14 * s);
   ctx.fill();
   ctx.fillStyle = '#cba158';
-  for (let i = 0; i < FIELD.rows; i++) {
-    const ra = proj(FIELD.x - FIELD.w / 2 + 14, FIELD.z - 62 + i * 62 - 9);
-    const rb = proj(FIELD.x + FIELD.w / 2 - 14, FIELD.z - 62 + i * 62 + 9);
+  for (let i = 0; i < rows; i++) {
+    const ra = proj(FIELD.x - FIELD.w / 2 + 14, FIELD.z - 62 + i * FIELD.rowSpacing - 9);
+    const rb = proj(FIELD.x + FIELD.w / 2 - 14, FIELD.z - 62 + i * FIELD.rowSpacing + 9);
     roundRect(ctx, ra.x, ra.y, rb.x - ra.x, rb.y - ra.y, 8 * s);
     ctx.fill();
   }
 }
 
-export function drawEnclosureSand(ctx: CanvasRenderingContext2D, x: number, z: number): void {
+export function drawEnclosureSand(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  z: number,
+  sandTop: string,
+): void {
   const s = cam.s;
   const a = proj(x - 72, z - 64);
   const b = proj(x + 72, z + 52);
-  ctx.fillStyle = '#ecd9ad';
+  ctx.fillStyle = sandTop;
   roundRect(ctx, a.x, a.y, b.x - a.x, b.y - a.y, 16 * s);
   ctx.fill();
+}
+
+/** Épouvantail décoratif, visible une fois le champ agrandi (palier 4). */
+export function drawScarecrow(ctx: CanvasRenderingContext2D, x: number, z: number): void {
+  drawShadow(ctx, x, z, 14);
+  drawBox(ctx, x, z, 0, 6, 6, 30, '#8a5a2e', '#6e4522', 2);
+  drawBox(ctx, x, z, 26, 26, 6, 5, '#d9a83c', '#b3812a', 2);
+  drawBox(ctx, x, z, 30, 14, 12, 16, '#c9a35a', '#a9843f', 4);
+  drawBox(ctx, x, z, 44, 12, 11, 11, '#e8cfa0', '#c7ab84', 5);
+  drawBox(ctx, x, z, 50, 16, 15, 3, '#9b6b3a', '#7c4f26', 3);
 }

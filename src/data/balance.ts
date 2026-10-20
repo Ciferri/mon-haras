@@ -139,9 +139,50 @@ export const OFFLINE = {
 export const SAVE = {
   storageKey: 'mon-grand-haras-save',
   /** Version du schéma de sauvegarde ; incrémenter à chaque changement de forme. */
-  schemaVersion: 1,
+  schemaVersion: 2,
   /** Intervalle de sauvegarde automatique (secondes). */
   autosaveInterval: 5,
+};
+
+export const WATER = {
+  /** Capacité de transport du joueur (unités d'eau sur la pile). */
+  maxCarry: 4,
+  /** Capacité de stockage d'eau de chaque cheval. */
+  maxInHorse: 6,
+  /** Cooldown entre deux remplissages/livraisons (secondes). */
+  fillCooldown: 0.32,
+  /** Position du puits dans le monde. */
+  wellX: 230,
+  wellZ: 96,
+  /** Rayon d'interaction avec le puits. */
+  wellRadius: 46,
+  /** Rayon d'interaction avec l'abreuvoir d'un cheval. */
+  troughRadius: 50,
+  /** Décalage de l'abreuvoir par rapport à la mangeoire (même enclos). */
+  troughOffsetX: 32,
+  /** Facteur appliqué au temps de mastication quand le cheval a de l'eau (< 1 = plus rapide). */
+  chewSpeedMultiplier: 0.65,
+};
+
+export const FIELD_EXTENSION = {
+  /** Nombre de rangées du champ une fois l'extension achetée. */
+  rows: 4,
+  cost: 400,
+};
+
+export const EMPLOYEE = {
+  /** Nombre maximum d'employés embauchables en Phase 2. */
+  maxCount: 2,
+  baseCost: 250,
+  costGrowth: 2.2,
+  /** Vitesse de déplacement (plus lente que le joueur). */
+  speed: 95,
+  /** Position de la zone d'embauche, aussi point d'attente par défaut. */
+  hireX: 230,
+  hireZ: 330,
+  hireRadius: 42,
+  /** Distance en-dessous de laquelle un employé considère avoir atteint sa cible. */
+  arriveThreshold: 10,
 };
 
 export const TUTORIAL_STEPS = {

@@ -5,10 +5,16 @@ export interface Player {
   walk: number;
   stack: number;
   max: number;
+  /** Eau transportée sur la pile, séparément de la paille. */
+  waterStack: number;
+  maxWaterStack: number;
   leanX: number;
   leanZ: number;
   hCd: number;
   dCd: number;
+  /** Cooldowns du puits (remplissage) et de l'abreuvoir (livraison). */
+  wCd: number;
+  wdCd: number;
   moving: boolean;
 }
 
@@ -23,6 +29,18 @@ export interface Horse {
   unlocked: boolean;
   pop: number;
   bob: number;
+  /** Réserve d'eau : accélère la mastication quand elle n'est pas vide (Phase 2). */
+  water: number;
+  maxWater: number;
+}
+
+/** Employé automatique qui récolte la paille et nourrit les chevaux sans intervention. */
+export interface Worker {
+  x: number;
+  z: number;
+  dir: 1 | -1;
+  carrying: boolean;
+  walk: number;
 }
 
 export interface Plant {
@@ -42,6 +60,8 @@ export interface Coin {
   mag: boolean;
 }
 
+export type BuyZoneKind = 'unlockHorse' | 'upgradeHorse' | 'extendField' | 'hireEmployee';
+
 export interface BuyZone {
   x: number;
   z: number;
@@ -50,6 +70,7 @@ export interface BuyZone {
   left: number;
   icon: string;
   label: string;
+  kind: BuyZoneKind;
   horseIndex?: number;
   /** Accumulateur de temps pour cadencer les flyers visuels pendant le drainage. */
   flyerAccum: number;
@@ -60,6 +81,8 @@ export interface BuyZone {
 export type Flyer =
   | { type: 'hay'; t: number; x: number; z: number; y: number }
   | { type: 'hay2'; t: number; x: number; z: number; y: number; tx: number; tz: number }
+  | { type: 'water'; t: number; x: number; z: number; y: number }
+  | { type: 'water2'; t: number; x: number; z: number; y: number; tx: number; tz: number }
   | { type: 'coinHud'; t: number; sx: number; sy: number; tx: number; tz: number };
 
 export interface Particle {

@@ -8,6 +8,9 @@ Phase 1 (fondations) : port complet du prototype (`reference/prototype.html`)
 dans une architecture Vite + TypeScript strict, avec sauvegarde locale et
 gains hors ligne.
 
+Phase 2 : deuxième ressource (l'eau, bonus de vitesse optionnel), employés
+automatiques, paliers visuels (niveau 4) et extension du terrain.
+
 ## Lancer en développement
 
 ```bash
@@ -73,11 +76,12 @@ src/
   render.ts             orchestration du rendu (tri en profondeur)
   engine/                projection pseudo-3D, caméra, primitives de dessin
   input/joystick.ts      joystick tactile/souris/clavier
-  world/                 entités (player, horse, plant, coin), layout, effets
-  systems/               harvest, deliver, produce, buyzones, collect, tuto,
-                         offline, save, adBoost — logique de jeu pure
+  world/                 entités (player, horse, worker, plant, coin), layout,
+                         puits (well.ts), scénographie, effets
+  systems/               harvest, deliver, water, produce, employee, buyzones,
+                         collect, tuto, offline, save, adBoost — logique pure
   data/balance.ts        TOUTES les constantes d'équilibrage
-  data/tiers.ts          paliers visuels (structure prête, contenu Phase 2)
+  data/tiers.ts          paliers visuels (niveau 4 rempli en Phase 2)
   ui/                    HUD DOM, toasts, tutoriel, overlays
   monetization/          interfaces AdsProvider + implémentation simulée
 ```

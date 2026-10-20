@@ -1,4 +1,4 @@
-import { FIELD as FIELD_BALANCE, DELIVERY } from '../data/balance';
+import { FIELD as FIELD_BALANCE, DELIVERY, WATER } from '../data/balance';
 import type { Horse, Plant } from './types';
 
 export const FIELD = FIELD_BALANCE;
@@ -6,15 +6,20 @@ export const FIELD = FIELD_BALANCE;
 export function createField(): Plant[] {
   const plants: Plant[] = [];
   for (let r = 0; r < FIELD.rows; r++) {
-    for (let c = 0; c < FIELD.cols; c++) {
-      plants.push({
-        x: FIELD.x - 105 + c * FIELD.colSpacing,
-        z: FIELD.z - 62 + r * FIELD.rowSpacing,
-        g: 1,
-      });
-    }
+    addFieldRow(plants, r);
   }
   return plants;
+}
+
+/** Ajoute une rangée de plants prêts à récolter (utilisé à la création et lors d'une extension du champ). */
+export function addFieldRow(plants: Plant[], rowIndex: number): void {
+  for (let c = 0; c < FIELD.cols; c++) {
+    plants.push({
+      x: FIELD.x - 105 + c * FIELD.colSpacing,
+      z: FIELD.z - 62 + rowIndex * FIELD.rowSpacing,
+      g: 1,
+    });
+  }
 }
 
 export const TREES: [number, number][] = [
@@ -51,6 +56,11 @@ export function createFlowers(): Flower[] {
 
 export function feederOf(h: Horse): { x: number; z: number } {
   return { x: h.x, z: h.z + DELIVERY.feederOffsetZ };
+}
+
+/** Abreuvoir à eau, posé juste à côté de la mangeoire dans le même enclos. */
+export function troughOf(h: Horse): { x: number; z: number } {
+  return { x: h.x + WATER.troughOffsetX, z: h.z + DELIVERY.feederOffsetZ };
 }
 
 export function fenceSegs(h: Horse): { x: number; z: number; w: number; d: number }[] {

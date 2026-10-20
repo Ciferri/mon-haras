@@ -25,6 +25,26 @@ export function presentEvents(state: GameState, events: GameEvent[]): void {
         buzz([15, 30, 15]);
         toast('🐴 Un nouveau cheval rejoint le haras !');
         break;
+      case 'waterCollected':
+        buzz(6);
+        break;
+      case 'waterDelivered':
+        buzz(8);
+        if (!state.waterToastShown) {
+          state.waterToastShown = true;
+          toast("💧 Cheval abreuvé : il mâche plus vite tant qu'il a de l'eau !");
+        }
+        break;
+      case 'fieldExtended':
+        burst(state.parts, ev.x, ev.z, 24, '#8fd45f');
+        buzz([15, 30, 15]);
+        toast("🌾 Le champ s'agrandit !");
+        break;
+      case 'employeeHired':
+        burst(state.parts, ev.x, ev.z, 20, '#6b8f4e');
+        buzz([15, 30, 15]);
+        toast('👷 Un employé rejoint le haras !');
+        break;
       case 'tutoAdvanced':
         updateTutorialText(ev.step);
         break;

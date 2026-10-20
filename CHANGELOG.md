@@ -2,9 +2,45 @@
 
 Toutes les modifications notables de ce projet sont documentées ici.
 
+## [0.2.0] — Phase 2 : eau, employés, paliers visuels, extension du terrain
+
+### Ajouté
+
+- **Deuxième ressource : l'eau.** Un puits fixe (`world/well.ts`) où le
+  joueur remplit sa réserve (`systems/water.ts`), un abreuvoir par cheval
+  à côté de chaque mangeoire (`world/horse.ts`). Un cheval abreuvé mâche
+  35 % plus vite et consomme son eau en même temps que sa paille — bonus
+  optionnel, la boucle de la Phase 1 reste identique sans eau (voir
+  `docs/DECISIONS.md`).
+- **Employés automatiques.** Jusqu'à 2 employés embauchables (coût
+  croissant géométriquement) qui récoltent la paille et nourrissent les
+  chevaux en continu, sans intervention du joueur (`systems/employee.ts`,
+  `world/worker.ts`).
+- **Paliers visuels (niveau 4).** Cheval : robe plus sombre + harnais.
+  Enclos : clôture peinte en blanc. Champ : 4e rangée + épouvantail
+  (`data/tiers.ts`, désormais câblés dans `render.ts`/`world/horse.ts`).
+- **Extension du terrain.** Nouvelle zone d'achat « Agrandir le champ »
+  (400 or) qui ajoute une 4e rangée de plants.
+- Sauvegarde migrée en version 2 (`systems/save.ts`) : eau par cheval,
+  nombre de rangées du champ, nombre d'employés. Une sauvegarde v1
+  existante est migrée automatiquement, sans perte de progression.
+
+### Notes techniques
+
+- `systems/buyzones.ts` ferme désormais sur `GameState` entier (plutôt que
+  sur le seul tableau de chevaux) pour pouvoir muter les plants, les
+  employés et le nombre de rangées depuis les zones d'achat.
+- Les employés sont une IA sans état (recalcul de la cible à chaque frame,
+  voir `docs/DECISIONS.md`) et n'émettent aucun événement de présentation
+  (pas de vibration/toast) pour ne pas parasiter le retour sensoriel des
+  actions du joueur.
+- Bundle de production : ~11,2 ko gzippé (JS) + ~1,3 ko gzippé (CSS),
+  toujours très loin sous le budget de 300 ko.
+
 ## [0.1.0] — Phase 1 : fondations
 
 ### Ajouté
+
 - Projet Vite + TypeScript strict, ESLint (flat config) + Prettier, `netlify.toml`.
 - Moteur de rendu pseudo-3D (`engine/`) : projection écran, caméra suiveuse
   avec clamp aux bords du monde, primitives de dessin (boîtes empilées,
@@ -36,6 +72,7 @@ Toutes les modifications notables de ce projet sont documentées ici.
 - `docs/DECISIONS.md` pour tracer les choix de game design ambigus.
 
 ### Notes techniques
+
 - Toutes les constantes d'équilibrage sont centralisées dans
   `data/balance.ts`.
 - Les systèmes de jeu (`systems/`) sont des fonctions pures d'état qui

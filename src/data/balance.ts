@@ -94,6 +94,8 @@ export const HORSE = {
   popDecaySpeed: 1.6,
   /** Hauteur du sprite du cheval en unités monde (largeur dérivée de son ratio d'aspect). */
   spriteHeight: 70,
+  /** Largeur du sprite de la mangeoire en unités monde (hauteur dérivée de son ratio d'aspect). */
+  feederSpriteWidth: 60,
 };
 
 export const UPGRADE = {

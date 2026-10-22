@@ -5,9 +5,11 @@ import { feederOf, troughOf } from './layout';
 import { horseTierFor } from '../data/tiers';
 import { loadSprite } from '../engine/sprites';
 import horseSpriteUrl from '../assets/sprites/horse.png';
+import feederSpriteUrl from '../assets/sprites/feeder.png';
 import type { Horse } from './types';
 
 const horseSprite = loadSprite(horseSpriteUrl);
+const feederSprite = loadSprite(feederSpriteUrl);
 
 export function createHorse(x: number, z: number, dir: 1 | -1, unlocked: boolean): Horse {
   return {
@@ -35,10 +37,15 @@ export function updateHorseAnim(h: Horse, dt: number): void {
 export function drawFeeder(ctx: CanvasRenderingContext2D, h: Horse): void {
   const f = feederOf(h);
   drawShadow(ctx, f.x, f.z, 24);
-  drawBox(ctx, f.x, f.z, 0, 52, 22, 11, '#b07b3f', '#8a5a28', 4);
-  if (h.feed > 0) drawBox(ctx, f.x, f.z, 10, 42, 15, 5, '#f6cf5a', '#d9a83c', 3);
-  const p = proj(f.x, f.z, 26);
+  const ground = proj(f.x, f.z, 0);
   const s = cam.s;
+  if (feederSprite.complete && feederSprite.naturalWidth > 0) {
+    const aspect = feederSprite.naturalWidth / feederSprite.naturalHeight;
+    const w2 = HORSE.feederSpriteWidth * s;
+    const h2 = w2 / aspect;
+    ctx.drawImage(feederSprite, ground.x - w2 / 2, ground.y - h2, w2, h2);
+  }
+  const p = proj(f.x, f.z, 26);
   const w = 54 * s;
   ctx.fillStyle = 'rgba(30,25,15,.4)';
   roundRect(ctx, p.x - w / 2, p.y, w, 7 * s, 4 * s);

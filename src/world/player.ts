@@ -1,6 +1,11 @@
 import { CAMERA, PLAYER, WATER, WORLD } from '../data/balance';
 import { drawBox, drawShadow } from '../engine/draw';
+import { cam, proj } from '../engine/camera';
+import { loadSprite } from '../engine/sprites';
+import playerSpriteUrl from '../assets/sprites/player.png';
 import type { Player } from './types';
+
+const playerSprite = loadSprite(playerSpriteUrl);
 
 export function createPlayer(): Player {
   return {
@@ -43,18 +48,25 @@ export function updatePlayerMovement(player: Player, dt: number, ux: number, uy:
   player.wdCd -= dt;
 }
 
+/** Dessine le sprite du joueur, ancré par les pieds au point projeté, retourné selon la direction. */
+function drawPlayerSprite(ctx: CanvasRenderingContext2D, P: Player, bob: number): void {
+  const ground = proj(P.x, P.z, 0);
+  const s = cam.s;
+  if (!playerSprite.complete || playerSprite.naturalWidth === 0) return;
+  const aspect = playerSprite.naturalWidth / playerSprite.naturalHeight;
+  const h = PLAYER.spriteHeight * s;
+  const w = h * aspect;
+  ctx.save();
+  ctx.translate(ground.x, ground.y - bob * s);
+  ctx.scale(P.face, 1);
+  ctx.drawImage(playerSprite, -w / 2, -h, w, h);
+  ctx.restore();
+}
+
 export function drawPlayer(ctx: CanvasRenderingContext2D, P: Player): void {
   const bob = P.moving ? Math.abs(Math.sin(P.walk)) * 2 : 0;
   drawShadow(ctx, P.x, P.z, 15);
-  const sw = Math.sin(P.walk) * 3.5;
-  drawBox(ctx, P.x - 5, P.z, 0, 6, 6, 11 + (P.moving ? sw : 0), '#35415c', '#28324a', 2);
-  drawBox(ctx, P.x + 5, P.z, 0, 6, 6, 11 - (P.moving ? sw : 0), '#35415c', '#28324a', 2);
-  drawBox(ctx, P.x, P.z, 10 + bob, 17, 11, 15, '#3f8fdd', '#2e6fb4', 5);
-  drawBox(ctx, P.x - 11, P.z, 13 + bob, 5, 5, 10, '#3f8fdd', '#2e6fb4', 2);
-  drawBox(ctx, P.x + 11, P.z, 13 + bob, 5, 5, 10, '#3f8fdd', '#2e6fb4', 2);
-  drawBox(ctx, P.x, P.z, 25 + bob, 13, 11, 11, '#f2c9a0', '#d6a87d', 4);
-  drawBox(ctx, P.x, P.z, 35 + bob, 15, 12, 4.5, '#e0552e', '#b83e1d', 3);
-  drawBox(ctx, P.x + 5 * P.face, P.z + 3, 35 + bob, 9, 7, 2.5, '#e0552e', '#b83e1d', 2);
+  drawPlayerSprite(ctx, P, bob);
   for (let i = 0; i < P.stack; i++) {
     const lx = P.x + P.leanX * (i + 1) * 0.45;
     const lz = P.z + P.leanZ * (i + 1) * 0.35;

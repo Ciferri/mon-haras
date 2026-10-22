@@ -2,9 +2,29 @@
 
 Toutes les modifications notables de ce projet sont documentées ici.
 
+## [0.3.0] — Premier sprite dessiné : le joueur
+
+### Ajouté
+- `engine/sprites.ts` : chargement d'image minimal (`loadSprite`), pensé
+  pour être réutilisé à chaque nouvel asset dessiné.
+- Le joueur (`world/player.ts`) est désormais un sprite PNG dessiné à la
+  main (`assets/sprites/player.png`), ancré par les pieds au point projeté
+  au sol, retourné horizontalement selon la direction de déplacement
+  (`ctx.scale(P.face, 1)`). La pile de paille/eau transportée reste en
+  rendu procédural (petits éléments, pas besoin d'un sprite dédié).
+- Image compressée (palette indexée, redimensionnée à la taille réellement
+  affichée en jeu) : 10 ko au lieu des 296 ko de l'export source — le jeu
+  reste très loin sous le budget de 300 ko.
+
+### Notes techniques
+- Voir `docs/DECISIONS.md` pour le choix de garder le moteur de caméra
+  identique (le sprite est un simple "panneau" placé dans le monde 3D
+  simulé, pas besoin de ré-angler les futurs dessins).
+
 ## [0.2.1] — Correctif : personnage invisible sur écran haute densité
 
 ### Corrigé
+
 - Le `<canvas>` n'avait pas de `width`/`height` CSS explicites. Sur tout
   écran avec `devicePixelRatio > 1` (quasi tous les mobiles), il gardait sa
   taille intrinsèque (celle du buffer interne, dimensionné en pixels
@@ -13,7 +33,7 @@ Toutes les modifications notables de ce projet sont documentées ici.
   de l'écran — invisible, mais toujours simulée. En pratique, le
   personnage disparaissait dès qu'il s'éloignait du coin haut-gauche de la
   carte (typiquement en allant vers le champ). Fix : `canvas { width:
-  100%; height: 100%; }` dans `src/style.css`.
+100%; height: 100%; }` dans `src/style.css`.
 
 ## [0.2.0] — Phase 2 : eau, employés, paliers visuels, extension du terrain
 

@@ -45,6 +45,8 @@ export const PLAYER = {
   movingThreshold: 0.12,
   /** Seuil d'input horizontal pour changer l'orientation du personnage. */
   faceThreshold: 0.15,
+  /** Hauteur du sprite du joueur en unités monde (largeur dérivée de son ratio d'aspect). */
+  spriteHeight: 64,
 };
 
 export const HARVEST = {

@@ -112,3 +112,42 @@ inclure l'eau par cheval, le nombre de rangées du champ et le nombre
 d'employés. `systems/save.ts` détecte une sauvegarde v1 existante et la
 migre silencieusement (eau à 0, champ à 3 rangées, 0 employé) plutôt que de
 l'invalider — un joueur de la Phase 1 ne perd pas sa progression.
+
+## Phase 3 (visuels dessinés à la main)
+
+### Sprites "panneaux" plutôt que ré-angler le moteur
+
+Le moteur affiche le monde en pseudo-3D (caméra inclinée, `CAMERA.kz`,
+boîtes extrudées). Un sprite dessiné à la main en vue de face/3-4 légère
+(comme la plupart des personnages de jeux top-down — Stardew Valley,
+Zelda classiques) ne respecte pas cet angle de caméra à la lettre.
+
+**Décision** : ne pas y toucher. Le sprite est simplement placé comme un
+panneau ("billboard") au point projeté du monde (`proj(x,z,0)`, ancré par
+les pieds), sans tenter de le dessiner "à plat" selon l'angle de la
+caméra. C'est la convention standard de l'immense majorité des jeux
+top-down 2D — le joueur ne la remarque pas — et elle évite de contraindre
+chaque futur dessin à une perspective très spécifique et difficile à
+respecter à la main. Seule règle : le sprite se retourne horizontalement
+selon la direction de déplacement (`ctx.scale(face, 1)`), pas de rotation
+3D.
+
+### Rendu hybride : sprite pour le corps, procédural pour les accessoires
+
+La pile de paille/eau transportée par le joueur reste dessinée en boîtes
+procédurales (`drawBox`), pas en sprite. Ce sont de petits éléments
+répétés et déjà lisibles tels quels ; leur demander un sprite dédié
+n'apporterait rien et ajouterait du travail de dessin. Le même principe
+guidera les prochains ajouts : un sprite pour chaque élément identifiable
+(personnage, cheval, bâtiments), le procédural reste pour les éléments
+génériques/répétés (pièces, particules, barres de progression).
+
+### Compression des sprites
+
+Les images sources (export d'IA générative ou dessin) arrivent en haute
+résolution carrée (ex. 1024×1024, ~300 ko). Avant intégration, chaque
+sprite est redimensionné à la taille réellement affichée en jeu (avec une
+marge pour les écrans haute densité) et reconverti en PNG à palette
+indexée (peu de couleurs, aplats francs — le style flat cartoon s'y prête
+très bien). Le premier sprite (joueur) passe ainsi de 296 ko à 10 ko.
+

@@ -2,15 +2,27 @@
 
 Toutes les modifications notables de ce projet sont documentées ici.
 
+## [0.3.4] — Sprite dessiné pour l'abreuvoir
+
+### Ajouté
+- L'abreuvoir (`world/horse.ts`, `drawTrough`) est désormais un sprite PNG
+  dessiné à la main (`assets/sprites/trough.png`), même principe que la
+  mangeoire. La barre de remplissage d'eau reste procédurale et dynamique.
+- L'enclos du cheval (Phase 3) est maintenant entièrement en sprites
+  dessinés à la main : joueur (face/dos), cheval, mangeoire, abreuvoir.
+  Restent en procédural : clôture, sable, champ, puits, arbres, pièces.
+
 ## [0.3.3] — Sprite dessiné pour la mangeoire
 
 ### Ajouté
+
 - La mangeoire (`world/horse.ts`, `drawFeeder`) est désormais un sprite PNG
   dessiné à la main (`assets/sprites/feeder.png`), dimensionné en largeur
   (`HORSE.feederSpriteWidth`). La barre de remplissage procédurale reste
   inchangée en dessous.
 
 ### Notes techniques
+
 - Le sprite montre toujours la mangeoire pleine de foin (pas de variante
   "vide") ; le niveau réel de paille reste communiqué par la barre de
   progression, qui reste dynamique.

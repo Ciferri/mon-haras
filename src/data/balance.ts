@@ -96,6 +96,8 @@ export const HORSE = {
   spriteHeight: 70,
   /** Largeur du sprite de la mangeoire en unités monde (hauteur dérivée de son ratio d'aspect). */
   feederSpriteWidth: 60,
+  /** Largeur du sprite de l'abreuvoir en unités monde (hauteur dérivée de son ratio d'aspect). */
+  troughSpriteWidth: 38,
 };
 
 export const UPGRADE = {

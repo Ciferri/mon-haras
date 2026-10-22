@@ -6,10 +6,12 @@ import { horseTierFor } from '../data/tiers';
 import { loadSprite } from '../engine/sprites';
 import horseSpriteUrl from '../assets/sprites/horse.png';
 import feederSpriteUrl from '../assets/sprites/feeder.png';
+import troughSpriteUrl from '../assets/sprites/trough.png';
 import type { Horse } from './types';
 
 const horseSprite = loadSprite(horseSpriteUrl);
 const feederSprite = loadSprite(feederSpriteUrl);
+const troughSprite = loadSprite(troughSpriteUrl);
 
 export function createHorse(x: number, z: number, dir: 1 | -1, unlocked: boolean): Horse {
   return {
@@ -58,10 +60,15 @@ export function drawFeeder(ctx: CanvasRenderingContext2D, h: Horse): void {
 export function drawTrough(ctx: CanvasRenderingContext2D, h: Horse): void {
   const t = troughOf(h);
   drawShadow(ctx, t.x, t.z, 15);
-  drawBox(ctx, t.x, t.z, 0, 30, 20, 9, '#7d93a8', '#5f7488', 4);
-  if (h.water > 0) drawBox(ctx, t.x, t.z, 9, 24, 14, 4, '#5fb6e0', '#3f93c0', 3);
-  const p = proj(t.x, t.z, 20);
+  const ground = proj(t.x, t.z, 0);
   const s = cam.s;
+  if (troughSprite.complete && troughSprite.naturalWidth > 0) {
+    const aspect = troughSprite.naturalWidth / troughSprite.naturalHeight;
+    const w2 = HORSE.troughSpriteWidth * s;
+    const h2 = w2 / aspect;
+    ctx.drawImage(troughSprite, ground.x - w2 / 2, ground.y - h2, w2, h2);
+  }
+  const p = proj(t.x, t.z, 20);
   const w = 36 * s;
   ctx.fillStyle = 'rgba(30,25,15,.4)';
   roundRect(ctx, p.x - w / 2, p.y, w, 6 * s, 3 * s);

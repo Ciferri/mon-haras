@@ -151,3 +151,13 @@ marge pour les écrans haute densité) et reconverti en PNG à palette
 indexée (peu de couleurs, aplats francs — le style flat cartoon s'y prête
 très bien). Le premier sprite (joueur) passe ainsi de 296 ko à 10 ko.
 
+### Deux sprites (face/dos) + flip, pas quatre directions
+
+Un sprite "panneau" de face ne fonctionne pas quand le joueur s'éloigne de
+la caméra (vers le haut de l'écran) : on le verrait avancer face à
+l'objectif, ce qui lit mal comme un recul. Plutôt que de commander 4
+sprites (face/dos/gauche/droite), on combine 2 sprites (face, dos) avec le
+flip horizontal déjà en place pour `face` — couvre les 4 directions
+visuelles avec moitié moins de dessins à produire et à maintenir. Voir
+`Player.facingBack`, calculé comme `face` (seuil sur l'input, persiste
+quand l'axe correspondant est proche de zéro).

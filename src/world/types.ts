@@ -2,6 +2,8 @@ export interface Player {
   x: number;
   z: number;
   face: 1 | -1;
+  /** true quand le joueur s'éloigne de la caméra (vers le haut de l'écran) : sprite de dos. */
+  facingBack: boolean;
   walk: number;
   stack: number;
   max: number;

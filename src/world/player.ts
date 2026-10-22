@@ -3,15 +3,18 @@ import { drawBox, drawShadow } from '../engine/draw';
 import { cam, proj } from '../engine/camera';
 import { loadSprite } from '../engine/sprites';
 import playerSpriteUrl from '../assets/sprites/player.png';
+import playerBackSpriteUrl from '../assets/sprites/player-back.png';
 import type { Player } from './types';
 
 const playerSprite = loadSprite(playerSpriteUrl);
+const playerBackSprite = loadSprite(playerBackSpriteUrl);
 
 export function createPlayer(): Player {
   return {
     x: PLAYER.startX,
     z: PLAYER.startZ,
     face: 1,
+    facingBack: false,
     walk: 0,
     stack: 0,
     max: PLAYER.maxStack,
@@ -37,6 +40,7 @@ export function updatePlayerMovement(player: Player, dt: number, ux: number, uy:
     Math.min(WORLD.h - PLAYER.boundsMarginZBottom, player.z),
   );
   if (Math.abs(ux) > PLAYER.faceThreshold) player.face = ux > 0 ? 1 : -1;
+  if (Math.abs(uy) > PLAYER.faceThreshold) player.facingBack = uy < 0;
   player.walk += player.moving ? dt * PLAYER.walkSpeed : 0;
   player.leanX +=
     (-ux * PLAYER.leanFactorX - player.leanX) * Math.min(1, PLAYER.leanSmoothing * dt);
@@ -52,14 +56,15 @@ export function updatePlayerMovement(player: Player, dt: number, ux: number, uy:
 function drawPlayerSprite(ctx: CanvasRenderingContext2D, P: Player, bob: number): void {
   const ground = proj(P.x, P.z, 0);
   const s = cam.s;
-  if (!playerSprite.complete || playerSprite.naturalWidth === 0) return;
-  const aspect = playerSprite.naturalWidth / playerSprite.naturalHeight;
+  const sprite = P.facingBack ? playerBackSprite : playerSprite;
+  if (!sprite.complete || sprite.naturalWidth === 0) return;
+  const aspect = sprite.naturalWidth / sprite.naturalHeight;
   const h = PLAYER.spriteHeight * s;
   const w = h * aspect;
   ctx.save();
   ctx.translate(ground.x, ground.y - bob * s);
   ctx.scale(P.face, 1);
-  ctx.drawImage(playerSprite, -w / 2, -h, w, h);
+  ctx.drawImage(sprite, -w / 2, -h, w, h);
   ctx.restore();
 }
 

@@ -2,9 +2,21 @@
 
 Toutes les modifications notables de ce projet sont documentées ici.
 
+## [0.3.1] — Sprite de dos pour le joueur
+
+### Ajouté
+
+- Deuxième sprite du joueur, vu de dos (`assets/sprites/player-back.png`),
+  utilisé quand le joueur s'éloigne de la caméra (vers le haut de l'écran).
+  `Player.facingBack` suit la direction verticale du dernier mouvement
+  significatif, sur le même principe que `face` (gauche/droite). Le flip
+  horizontal s'applique aux deux sprites : 2 images couvrent les 4
+  directions.
+
 ## [0.3.0] — Premier sprite dessiné : le joueur
 
 ### Ajouté
+
 - `engine/sprites.ts` : chargement d'image minimal (`loadSprite`), pensé
   pour être réutilisé à chaque nouvel asset dessiné.
 - Le joueur (`world/player.ts`) est désormais un sprite PNG dessiné à la
@@ -17,6 +29,7 @@ Toutes les modifications notables de ce projet sont documentées ici.
   reste très loin sous le budget de 300 ko.
 
 ### Notes techniques
+
 - Voir `docs/DECISIONS.md` pour le choix de garder le moteur de caméra
   identique (le sprite est un simple "panneau" placé dans le monde 3D
   simulé, pas besoin de ré-angler les futurs dessins).

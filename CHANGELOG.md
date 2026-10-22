@@ -2,6 +2,22 @@
 
 Toutes les modifications notables de ce projet sont documentées ici.
 
+## [0.3.2] — Sprite dessiné pour le cheval
+
+### Ajouté
+
+- Le cheval (`world/horse.ts`) est désormais un sprite PNG dessiné à la
+  main (`assets/sprites/horse.png`), retourné horizontalement selon
+  `dir` (comme avant, les deux box se font face). Le harnais du palier 4
+  reste une fine bande procédurale dessinée par-dessus le sprite.
+
+### Retiré
+
+- L'animation des jambes pendant la mastication et le mouvement de tête
+  vers la mangeoire (détails procéduraux) : un sprite statique ne peut pas
+  les reproduire sans plusieurs images dédiées. À revisiter si une
+  véritable animation (plusieurs poses) est produite plus tard.
+
 ## [0.3.1] — Sprite de dos pour le joueur
 
 ### Ajouté

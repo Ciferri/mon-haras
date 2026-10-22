@@ -92,6 +92,8 @@ export const HORSE = {
   maxCoinsOnScreen: 60,
   /** Vitesse de disparition de l'effet "pop" à l'arrivée d'un nouveau cheval. */
   popDecaySpeed: 1.6,
+  /** Hauteur du sprite du cheval en unités monde (largeur dérivée de son ratio d'aspect). */
+  spriteHeight: 70,
 };
 
 export const UPGRADE = {

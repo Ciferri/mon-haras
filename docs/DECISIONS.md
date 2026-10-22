@@ -161,3 +161,16 @@ flip horizontal déjà en place pour `face` — couvre les 4 directions
 visuelles avec moitié moins de dessins à produire et à maintenir. Voir
 `Player.facingBack`, calculé comme `face` (seuil sur l'input, persiste
 quand l'axe correspondant est proche de zéro).
+
+### Cheval : sprite statique, animations de détail abandonnées
+
+Le cheval procédural de la Phase 1/2 animait ses jambes pendant la
+mastication et tendait la tête vers la mangeoire en mangeant — des détails
+obtenus facilement avec des boîtes indépendantes, impossibles à reproduire
+avec un sprite unique sans plusieurs poses dessinées. Décision : accepter
+la perte de ces animations de détail pour l'instant (le cheval reste
+lisible et vivant grâce au `bob` et à l'effet d'apparition `pop`,
+conservés). Le harnais du palier 4 reste une bande procédurale dessinée
+par-dessus le sprite plutôt qu'un sprite dédié, car la couleur/teinte du
+pelage du sprite ne peut pas être recolorée par palier comme l'était la
+version procédurale — seule la décoration (harnais) reste par-dessus.

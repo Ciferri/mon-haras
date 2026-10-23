@@ -2,6 +2,12 @@
 
 Toutes les modifications notables de ce projet sont documentées ici.
 
+## [0.3.6] — Orientation de l'abreuvoir corrigée
+
+### Modifié
+- Sprite de l'abreuvoir retourné en miroir horizontal pour que son angle
+  (coin proche à droite) soit cohérent avec celui de la mangeoire.
+
 ## [0.3.5] — Sprite dessiné pour la paille mûre
 
 ### Ajouté

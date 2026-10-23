@@ -2,9 +2,18 @@
 
 Toutes les modifications notables de ce projet sont documentées ici.
 
+## [0.3.5] — Sprite dessiné pour la paille mûre
+
+### Ajouté
+- La paille prête à récolter (`world/plant.ts`, `drawPlant`) est désormais
+  un sprite PNG dessiné à la main (`assets/sprites/straw.png`,
+  `HARVEST.spriteHeight`). L'état "en repousse" (pousse verte) reste en
+  rendu procédural, faute de sprite dédié.
+
 ## [0.3.4] — Sprite dessiné pour l'abreuvoir
 
 ### Ajouté
+
 - L'abreuvoir (`world/horse.ts`, `drawTrough`) est désormais un sprite PNG
   dessiné à la main (`assets/sprites/trough.png`), même principe que la
   mangeoire. La barre de remplissage d'eau reste procédurale et dynamique.

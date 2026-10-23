@@ -56,6 +56,8 @@ export const HARVEST = {
   cooldown: 0.2,
   /** Temps de repousse d'une plante récoltée (secondes). */
   regrowTime: 6,
+  /** Hauteur du sprite de paille mûre, en unités monde. */
+  spriteHeight: 28,
 };
 
 export const FIELD = {
